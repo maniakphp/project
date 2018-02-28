@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+{% block categories %}
+    {% include 'menu.html.twig' with {'categories': (categories) } %}
+{% endblock %}
+{% block body %}
+    {% for advert in adverts %}
+        <div class="card card-inverse card-info mb-4 text-center">
+            <div class="card-header">
+                <h4>{{ advert.title }}</h4>
+            </div>
+            <div class="card-body text-center">
+                <p class="card-text">{{ advert.content }}</p>
+                <a href="{{ path('advert_details', {'id': advert.id}) }}" class="card-link">Read more</a>
+            </div>
+            <div class="card-footer text-muted text-center">
+                <div class="row">
+                    <div class="col">
+                        Dodane: {{ advert.created | date("Y-m-d H:i:s") }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        Dodane przez: {{ advert.user.username }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">Tagi:
+                        {% for tag in advert.tags %}
+                            {{ tag.name|join(',') }}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
